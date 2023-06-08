@@ -1,8 +1,16 @@
 
 #nav {
   background-color: #000;
+  color: magenta;
   margin-top: 20px;
   padding: 10px 0px 5px 0px;
+}
+#nav_heading {
+  display: black;
+  color: magenta;
+  float: left;
+  padding: 0px 0px;
+  text-decoration: none;
 }
 
 ul {
@@ -27,8 +35,14 @@ li {
 
 body {
   background-color:  #000;
-  /*background-image: url('.d./images/.jpg');*/
-  /*background-repeat: no-repeat;*/
+}
+
+#home {
+  background-color: #000;
+  color: magenta;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
 li a:hover {
