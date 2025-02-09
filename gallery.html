@@ -1,11 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>el jaime's personal website</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-  </body>
+    <title>Gallery</title>
+    <style>
+        body {
+            background-color: black;
+            color: cyan;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        a {
+            color: lime;
+            text-decoration: none;
+        }
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .gallery-container img {
+            width: 200px;
+            height: auto;
+            border: 2px solid cyan;
+            transition: transform 0.3s;
+        }
+        .gallery-container img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Gallery</h1>
+    <div id="gallery-list"></div>
+    <div id="image-container" class="gallery-container"></div>
+
+    <script>
+        let galleryStructure = {}; // This will be loaded from the JSON file
+
+        // Fetch the dynamically generated JSON file
+        fetch("galleryStructure.json")
+            .then(response => response.json())
+            .then(data => {
+                galleryStructure = data;
+                loadGallery();
+            })
+            .catch(error => console.error("Error loading gallery structure:", error));
+
+        function loadGallery() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const path = urlParams.get("path") || "";
+
+            if (!path) {
+                showMainFolders();
+            } else {
+                showSubfolderOrImages(path);
+            }
+        }
+
+        function showMainFolders() {
+            let html = "<h2>Select a Category</h2><ul>";
+            Object.keys(galleryStructure).forEach(folder => {
+                html += `<li><a href="?path=${folder}">${folder}</a></li>`;
+            });
+            html += "</ul>";
+            document.getElementById("gallery-list").innerHTML = html;
+        }
+
+        function showSubfolderOrImages(path) {
+            const parts = path.split("/");
+            let currentLevel = galleryStructure;
+
+            for (let part of parts) {
+                if (currentLevel[part]) {
+                    currentLevel = currentLevel[part];
+                } else {
+                    return;
+                }
+            }
+
+            let html = `<a href="gallery.html">← Back</a><h2>${path.replace("/", " > ")}</h2><ul>`;
+
+            if (typeof currentLevel === "object" && !Array.isArray(currentLevel)) {
+                Object.keys(currentLevel).forEach(subfolder => {
+                    html += `<li><a href="?path=${path}/${subfolder}">${subfolder}</a></li>`;
+                });
+            } else {
+                document.getElementById("gallery-list").innerHTML = html + "</ul>";
+                displayImages(path, currentLevel);
+                return;
+            }
+
+            document.getElementById("gallery-list").innerHTML = html + "</ul>";
+            document.getElementById("image-container").innerHTML = "";
+        }
+
+        function displayImages(path, images) {
+            let html = '<div class="gallery-container">';
+            images.forEach(img => {
+                html += `<img src="gallery/${path}/${img}" alt="${img}">`;
+            });
+            html += '</div>';
+            document.getElementById("image-container").innerHTML = html;
+        }
+    </script>
+</body>
 </html>
+
