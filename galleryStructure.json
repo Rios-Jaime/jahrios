@@ -1,6 +1,5 @@
 {
     "friends": {
-        "egnerlab": {},
         "ella": {
             "images": [
                 "1.jpg",
@@ -191,7 +190,6 @@
                 "9.jpg"
             ]
         },
-        "encinada": {},
         "grand_canyon": {
             "images": [
                 "1.jpg",
@@ -199,7 +197,6 @@
                 "3.jpg"
             ]
         },
-        "joshua_tree": {},
         "lassen": {
             "images": [
                 "1.jpg",
@@ -373,7 +370,6 @@
             "images": [
                 "1.jpg"
             ]
-        },
-        "xacto": {}
+        }
     }
 }
