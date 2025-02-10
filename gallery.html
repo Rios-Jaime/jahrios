@@ -27,6 +27,7 @@
             padding: 20px;
             border-radius: 10px;
             text-align: center;
+            z-index: 1000;
         }
 
         .lightbox img {
@@ -65,7 +66,7 @@
 
         .gallery-container img:hover {
             transform: scale(1.05);
-        }
+        }    
     </style>
 </head>
 <body>
@@ -97,7 +98,7 @@
         }
 
         function showMainFolders() {
-            let html = "<h2>Select a Category</h2><ul>";
+            let html = `<a href="index.html">← Home</a><h2>Select a Category</h2><ul>`;
             Object.keys(galleryStructure).forEach(folder => {
                 html += `<li><a href="?path=${folder}">${folder}</a></li>`;
             });
@@ -105,8 +106,8 @@
             document.getElementById("gallery-list").innerHTML = html;
         }
 
-        ffunction showSubfolderOrImages(path) {
-            sessionStorage.setItem("previousPath", path); // ✅ Store the last visited path
+        function showSubfolderOrImages(path) {
+            sessionStorage.setItem("previousPath", path);
 
             const parts = path.split("/");
             let currentLevel = galleryStructure;
@@ -119,7 +120,13 @@
                 }
             }
 
-            let html = `<a href="javascript:goBack();">← Back</a><h2>${path.replace(/\//g, " > ")}</h2><ul>`;
+            // ✅ Add back button to subcategory pages
+            let parentPath = parts.slice(0, -1).join("/");
+            let backButton = parentPath
+                ? `<a href="javascript:showSubfolderOrImages('${parentPath}');">← Back</a>`
+                : `<a href="gallery.html">← Back to Categories</a>`;
+
+            let html = `${backButton}<h2>${path.replace(/\//g, " > ")}</h2><ul>`;
 
             if ("images" in currentLevel) {
                 displayImages(`gallery/${path}`, currentLevel["images"]);
@@ -134,23 +141,28 @@
             document.getElementById("gallery-list").innerHTML = html + "</ul>";
         }
 
-        // ✅ Function to go back correctly
         function goBack() {
             let prevPath = sessionStorage.getItem("previousPath");
+
             if (prevPath) {
                 showSubfolderOrImages(prevPath);
             } else {
-                window.location.href = "gallery.html"; // Default to main page
+                window.location.href = "gallery.html"; // ✅ Default to main gallery if no history
             }
         }
 
         function displayImages(path, images) {
-            let html = '<div class="gallery-container">';
+            let html = `<a href="javascript:goBack();">← Back</a>`;
+            html += '<div class="gallery-container">';
+
             images.forEach(img => {
                 let fullPath = `gallery/${path}/${img}`;
                 console.log("Loading Image:", fullPath);
-                html += `<img src="${fullPath}" class="gallery-img" onclick="openLightbox('${fullPath}')">`;
+        
+                // ✅ If an image fails to load, it will be hidden instead of displaying a broken image
+                html += `<img src="${fullPath}" class="gallery-img" onerror="this.onerror=null; this.style.display='none'; console.error('Image not found:', '${fullPath}');" onclick="openLightbox('${fullPath}')">`;
             });
+
             html += '</div>';
             document.getElementById("image-container").innerHTML = html;
         }
