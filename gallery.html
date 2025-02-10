@@ -84,20 +84,18 @@
 
             let html = `<a href="gallery.html">← Back</a><h2>${path.replace("/", " > ")}</h2><ul>`;
 
-            if (typeof currentLevel === "object" && !Array.isArray(currentLevel)) {
+            if ("images" in currentLevel) {
+                // If there are images, display them
+                displayImages(path, currentLevel["images"]);
+            } else {
+                // Otherwise, show subdirectories
                 Object.keys(currentLevel).forEach(subfolder => {
                     html += `<li><a href="?path=${path}/${subfolder}">${subfolder}</a></li>`;
                 });
-            } else {
-                document.getElementById("gallery-list").innerHTML = html + "</ul>";
-                displayImages(path, currentLevel);
-                return;
             }
 
-            document.getElementById("gallery-list").innerHTML = html + "</ul>";
-            document.getElementById("image-container").innerHTML = "";
-        }
-
+    document.getElementById("gallery-list").innerHTML = html + "</ul>";
+}
         function displayImages(path, images) {
             let html = '<div class="gallery-container">';
             images.forEach(img => {
@@ -107,8 +105,7 @@
             });
             html += '</div>';
             document.getElementById("image-container").innerHTML = html;
-        }
-                
+        }                
     </script>
 </body>
 </html>
