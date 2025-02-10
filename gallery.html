@@ -101,14 +101,14 @@
         function displayImages(path, images) {
             let html = '<div class="gallery-container">';
             images.forEach(img => {
-                let fullPath = `/gallery/${path}/${img}`;  // Ensure leading slash
-                console.log("Image Path:", fullPath);  // Debugging log
+                let fullPath = `gallery/${path}/${img}`;  // Corrected Path
+                console.log("Loading Image:", fullPath);  // Debugging log
                 html += `<img src="${fullPath}" alt="${img}" onerror="this.onerror=null; this.style.display='none'">`;
             });
             html += '</div>';
             document.getElementById("image-container").innerHTML = html;
         }
-        
+                
     </script>
 </body>
 </html>
