@@ -82,30 +82,32 @@
                 }
             }
 
-            let html = `<a href="gallery.html">← Back</a><h2>${path.replace("/", " > ")}</h2><ul>`;
+            let html = `<a href="gallery.html">← Back</a><h2>${path.replace(/\//g, " > ")}</h2><ul>`;
 
             if ("images" in currentLevel) {
-                // If there are images, display them
-                displayImages(path, currentLevel["images"]);
+                displayImages(`gallery/${path}`, currentLevel["images"]);
             } else {
-                // Otherwise, show subdirectories
                 Object.keys(currentLevel).forEach(subfolder => {
-                    html += `<li><a href="?path=${path}/${subfolder}">${subfolder}</a></li>`;
+                    if (subfolder !== "images") {  // ✅ Prevents "Images" from appearing as a link
+                        html += `<li><a href="?path=${path}/${subfolder}">${subfolder}</a></li>`;
+                    }
                 });
             }
 
-    document.getElementById("gallery-list").innerHTML = html + "</ul>";
-}
+            document.getElementById("gallery-list").innerHTML = html + "</ul>";
+        }
+
         function displayImages(path, images) {
             let html = '<div class="gallery-container">';
             images.forEach(img => {
-                let fullPath = `gallery/${path}/${img}`;  // Corrected Path
+                let fullPath = `${path}/${img}`;  // Corrected Path
                 console.log("Loading Image:", fullPath);  // Debugging log
                 html += `<img src="${fullPath}" alt="${img}" onerror="this.onerror=null; this.style.display='none'">`;
             });
             html += '</div>';
             document.getElementById("image-container").innerHTML = html;
-        }                
+        }
+                     
     </script>
 </body>
 </html>
