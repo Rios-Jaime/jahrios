@@ -15,21 +15,56 @@
             color: lime;
             text-decoration: none;
         }
-        .gallery-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
         }
-        .gallery-container img {
-            width: 200px;
+
+        .lightbox img {
+            width: 100%;
             height: auto;
-            border: 2px solid cyan;
-            transition: transform 0.3s;
+            max-height: 80vh;
         }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .gallery-container {
+            column-count: 3; /* Adjust for more or fewer columns */
+            column-gap: 10px;
+            margin: 20px auto;
+            width: 90%;
+        }
+
+        .gallery-container img {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+            border-radius: 5px;
+        }
+
+        .gallery-container img:nth-child(3n) { width: 80%; }
+        .gallery-container img:nth-child(4n) { width: 60%; }
+        .gallery-container img:nth-child(5n) { width: 100%; }
+
         .gallery-container img:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -70,7 +105,9 @@
             document.getElementById("gallery-list").innerHTML = html;
         }
 
-        function showSubfolderOrImages(path) {
+        ffunction showSubfolderOrImages(path) {
+            sessionStorage.setItem("previousPath", path); // ✅ Store the last visited path
+
             const parts = path.split("/");
             let currentLevel = galleryStructure;
 
@@ -82,13 +119,13 @@
                 }
             }
 
-            let html = `<a href="gallery.html">← Back</a><h2>${path.replace(/\//g, " > ")}</h2><ul>`;
+            let html = `<a href="javascript:goBack();">← Back</a><h2>${path.replace(/\//g, " > ")}</h2><ul>`;
 
             if ("images" in currentLevel) {
                 displayImages(`gallery/${path}`, currentLevel["images"]);
             } else {
                 Object.keys(currentLevel).forEach(subfolder => {
-                    if (subfolder !== "images") {  // ✅ Prevents "Images" from appearing as a link
+                    if (subfolder !== "images") {
                         html += `<li><a href="?path=${path}/${subfolder}">${subfolder}</a></li>`;
                     }
                 });
@@ -97,18 +134,44 @@
             document.getElementById("gallery-list").innerHTML = html + "</ul>";
         }
 
+        // ✅ Function to go back correctly
+        function goBack() {
+            let prevPath = sessionStorage.getItem("previousPath");
+            if (prevPath) {
+                showSubfolderOrImages(prevPath);
+            } else {
+                window.location.href = "gallery.html"; // Default to main page
+            }
+        }
+
         function displayImages(path, images) {
             let html = '<div class="gallery-container">';
             images.forEach(img => {
-                let fullPath = `${path}/${img}`;  // Corrected Path
-                console.log("Loading Image:", fullPath);  // Debugging log
-                html += `<img src="${fullPath}" alt="${img}" onerror="this.onerror=null; this.style.display='none'">`;
+                let fullPath = `gallery/${path}/${img}`;
+                console.log("Loading Image:", fullPath);
+                html += `<img src="${fullPath}" class="gallery-img" onclick="openLightbox('${fullPath}')">`;
             });
             html += '</div>';
             document.getElementById("image-container").innerHTML = html;
         }
-                     
+
+        // ✅ Open Lightbox Function
+        function openLightbox(imgSrc) {
+            document.getElementById("lightbox-img").src = imgSrc;
+            document.getElementById("lightbox").style.display = "block";
+        }
+
+        // ✅ Close Lightbox Function
+        function closeLightbox() {
+            document.getElementById("lightbox").style.display = "none";
+        }                     
     </script>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close" onclick="closeLightbox()">✖</span>
+        <img id="lightbox-img">
+    </div>
+
 </body>
 </html>
 
