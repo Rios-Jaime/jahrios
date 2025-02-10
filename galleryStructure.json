@@ -1,8 +1,7 @@
 {
     "friends": {
-        "egnerlab": {},
         "ella": {
-            "images": [
+            "ella": [
                 "1.jpg",
                 "10.jpg",
                 "11.jpg",
@@ -60,7 +59,7 @@
             ]
         },
         "gang": {
-            "images": [
+            "gang": [
                 "1.jpg",
                 "10.jpg",
                 "11.jpg",
@@ -84,19 +83,19 @@
             ]
         },
         "goob": {
-            "images": [
+            "goob": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "jules": {
-            "images": [
+            "jules": [
                 "1.jpg"
             ]
         },
         "lucas": {
-            "images": [
+            "lucas": [
                 "1.jpg",
                 "10.jpg",
                 "11.jpg",
@@ -113,7 +112,7 @@
             ]
         },
         "me": {
-            "images": [
+            "me": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -123,7 +122,7 @@
             ]
         },
         "poldracklab": {
-            "images": [
+            "poldracklab": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -136,7 +135,7 @@
     },
     "nature": {
         "bombay": {
-            "images": [
+            "bombay": [
                 "1.jpg",
                 "10.jpg",
                 "11.jpg",
@@ -155,7 +154,7 @@
             ]
         },
         "bryce_canyon": {
-            "images": [
+            "bryce_canyon": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -166,7 +165,7 @@
             ]
         },
         "burney": {
-            "images": [
+            "burney": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -178,7 +177,7 @@
             ]
         },
         "death_valley": {
-            "images": [
+            "death_valley": [
                 "1.jpg",
                 "10.jpg",
                 "2.jpg",
@@ -191,24 +190,22 @@
                 "9.jpg"
             ]
         },
-        "encinada": {},
         "grand_canyon": {
-            "images": [
+            "grand_canyon": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
-        "joshua_tree": {},
         "lassen": {
-            "images": [
+            "lassen": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "louisiana": {
-            "images": [
+            "louisiana": [
                 "1.jpg",
                 "10.jpg",
                 "11.jpg",
@@ -228,7 +225,7 @@
             ]
         },
         "marrow_bay": {
-            "images": [
+            "marrow_bay": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -236,26 +233,26 @@
             ]
         },
         "new_mexico": {
-            "images": [
+            "new_mexico": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "pedro": {
-            "images": [
+            "pedro": [
                 "1.jpg"
             ]
         },
         "salt_lake": {
-            "images": [
+            "salt_lake": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "secrets": {
-            "images": [
+            "secrets": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -264,7 +261,7 @@
             ]
         },
         "shark_fin": {
-            "images": [
+            "shark_fin": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -276,14 +273,14 @@
             ]
         },
         "texas": {
-            "images": [
+            "texas": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "the_bay": {
-            "images": [
+            "the_bay": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -293,14 +290,14 @@
             ]
         },
         "white_sands": {
-            "images": [
+            "white_sands": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "zion": {
-            "images": [
+            "zion": [
                 "1.jpg",
                 "2.jpg"
             ]
@@ -308,7 +305,7 @@
     },
     "shows": {
         "babes_kitchen": {
-            "images": [
+            "babes_kitchen": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -317,7 +314,7 @@
             ]
         },
         "cheree": {
-            "images": [
+            "cheree": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -325,14 +322,14 @@
             ]
         },
         "expose": {
-            "images": [
+            "expose": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg"
             ]
         },
         "figure8": {
-            "images": [
+            "figure8": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -342,7 +339,7 @@
             ]
         },
         "keef_haring": {
-            "images": [
+            "keef_haring": [
                 "1.jpg",
                 "2.jpg",
                 "3.jpg",
@@ -350,7 +347,7 @@
             ]
         },
         "ormf": {
-            "images": [
+            "ormf": [
                 "1.jpg",
                 "10.jpg",
                 "2.jpg",
@@ -364,16 +361,15 @@
             ]
         },
         "ridgeway": {
-            "images": [
+            "ridgeway": [
                 "1.jpg",
                 "2.jpg"
             ]
         },
         "sf": {
-            "images": [
+            "sf": [
                 "1.jpg"
             ]
-        },
-        "xacto": {}
+        }
     }
 }
