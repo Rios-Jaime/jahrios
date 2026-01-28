@@ -5,8 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teaching</title>
   <link rel="stylesheet" href="src/css/homepage_style.css">
+  <style>
+    /* Page-specific: use the Teaching background */
+    body#teaching {
+      background-image: url('src/images/teaching/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
 </head>
-<body id="home">
+<body id="teaching">
   <div id="nav">
     <div class="nav-internal" aria-label="internal links">
       <a href="index.html" class="pill">home</a>
@@ -15,13 +25,26 @@
       <a href="assorted_goods.html" class="pill">assorted goods</a>
       <a href="cv.html" class="pill">cv</a>
     </div>
+    <!-- External links: GitHub, Google Scholar, Mail (top-right) -->
+    <div class="nav-external" aria-label="external links">
+      <a class="icon-link" href="https://github.com/Rios-Jaime" target="_blank" rel="noopener" title="GitHub">
+        <img src="src/images/general/github_logo.png" alt="GitHub" />
+      </a>
+      <a class="icon-link" href="https://scholar.google.com/citations?user=8m2q4zsAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
+        <img src="src/images/general/gs_logo.png" alt="Google Scholar" />
+      </a>
+      <a class="icon-link" href="mailto:jaime.rios@duke.edu" title="Email">
+        <img src="src/images/general/mail_logo.png" alt="Email" />
+      </a>
+    </div>
   </div>
-  <main class="hero" style="min-height: 60vh;">
-    <section class="hero-left">
-      <div class="info-card" style="min-height: auto;">
+  <main class="hero teaching-hero" style="min-height: 60vh;">
+    <section class="hero-left" style="display:none;"></section>
+    <section class="hero-right">
+      <div class="info-card" style="min-height: auto; width: clamp(280px, 40vw, 760px);">
         <h1 class="name">Teaching</h1>
 
-        <h2>Context</h2>
+        <h3 class="subtitle">Context Statement</h3>
         <p class="bio">
         I am a 2nd year PhD student in the Psychology and Neuroscience department at Duke University. 
         My primary research focuses on understanding the neural and behavioral underpinnings of 
@@ -42,7 +65,7 @@
         that encourage students to engage in scientific discourse within open and supportive environments.
         </p>
 
-        <h2>Designing and Planning for Learning Activities</h2>
+        <h3 class="subtitle">Designing and Planning for Learning Activities</h3>
         <p class="bio">
         My approach to designing and planning learning activities is guided by the belief that students 
         learn most effectively when they are active participants in the process of scientific inquiry 
@@ -57,6 +80,7 @@
         We strive to make python an accessible tool for students to take with them as they move forward in research. 
         </p>
 
+        <h3 class="subtitle">Teaching and Supporting Student Learning</h3>
         <p class="bio">
         As a python instructor for undergraduates and as discussion leader for several courses (cognitive neuroscience, research methods), 
         I believe that it’s important for students to actively engage in the problem solving themselves and apply what they learn in either 
@@ -77,5 +101,10 @@
       </div>
     </section>
   </main>
+  <style>
+    /* Teaching layout: center the text box within the right column */
+    .teaching-hero { justify-content: flex-end; gap: 24px; padding-right: clamp(60px, 8vw, 160px); }
+    .teaching-hero .hero-right { flex: 0 1 900px; display: flex; flex-direction: column; align-items: center; }
+  </style>
 </body>
 </html>

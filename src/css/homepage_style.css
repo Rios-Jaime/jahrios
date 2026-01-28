@@ -109,6 +109,7 @@ img.small {
   flex-direction: column;
   justify-content: flex-start; /* start text at top of box */
   margin-left: 0; /* position defined by column alignment */
+  color: magenta; /* default text color for all children */
 }
 
 .info-card .name {
@@ -121,6 +122,26 @@ img.small {
 .info-card .subtitle {
   margin: 6px 0;
   font-size: clamp(14px, 2.2vw, 18px);
+  line-height: 1.3;
+  color: magenta;
+}
+
+/* Ensure section headers inside info-card are visible */
+.info-card h1 {
+  margin: 12px 0 6px;
+  font-size: clamp(22px, 3.8vw, 36px);
+  line-height: 1.2;
+  color: magenta;
+}
+.info-card h2 {
+  margin: 14px 0 8px;
+  font-size: clamp(16px, 2.4vw, 22px);
+  line-height: 1.3;
+  color: magenta;
+}
+.info-card h3 {
+  margin: 10px 0 6px;
+  font-size: clamp(14px, 2vw, 18px);
   line-height: 1.3;
   color: magenta;
 }
