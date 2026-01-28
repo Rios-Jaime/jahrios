@@ -5,9 +5,9 @@
 }
 
 #nav {
-  background-color: #000;
+  background-color: transparent;
   color: magenta;
-  margin-top: 20px;
+  margin-top: 0;
   padding: 10px 0px 5px 0px;
   position: relative; /* allow absolute positioning for external icons */
 }
@@ -24,7 +24,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #000;
+  background-color: transparent;
 }
 
 li {
@@ -39,9 +39,7 @@ li {
   text-decoration: none;
 }
 
-body {
-  background-color:  #000;
-}
+/* body background color fallback removed in favor of full-bleed image below */
 
 #home {
   background-color: #000;
@@ -166,16 +164,16 @@ nav {
 /* External icon nav (top-right) */
 .nav-external {
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: clamp(12px, 1.5vw, 18px);
+  right: clamp(20px, 4vw, 60px);
   display: flex;
   align-items: center;
   gap: 12px;
 }
 .nav-internal {
   position: absolute;
-  top: 8px;
-  left: 12px;
+  top: clamp(12px, 1.5vw, 18px);
+  left: clamp(20px, 4vw, 60px);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -188,16 +186,16 @@ nav {
   color: magenta;
   text-decoration: none;
   font-size: clamp(11px, 1.6vw, 14px);
-  background-color: rgba(0,0,0,0.5);
+  background-color: #000; /* solid black pill background */
 }
 
 .nav-internal .pill:hover {
-  background-color: rgba(255, 0, 255, 0.15);
+  background-color: #111;
 }
 
 .nav-external .icon-link img {
-  width: clamp(18px, 2.2vw, 22px);
-  height: clamp(18px, 2.2vw, 22px);
+  width: clamp(20px, 2.6vw, 28px);
+  height: clamp(20px, 2.6vw, 28px);
   display: block;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
 }
@@ -205,6 +203,9 @@ nav {
 .nav-external .icon-link:hover img {
   transform: scale(1.06);
 }
+
+/* When nav-external is placed inside hero-left, align it above and to the right */
+/* Ensure header external nav stays top-right; no special hero override */
 
 /* Responsive: stack on small screens */
 @media (max-width: 900px) {
@@ -223,6 +224,7 @@ nav {
     min-height: auto;
     margin-left: 0;
   }
+  /* Keep internal nav anchored in header on smaller screens */
 }
 @media (max-width: 600px) {
   .hero {
@@ -244,9 +246,17 @@ nav {
     right: 10px;
     gap: 10px;
   }
-  .nav-internal {
+  #nav .nav-internal {
     top: 6px;
     left: 10px;
     gap: 6px;
   }
+}
+
+/* Desktop: Center nav when inside hero-left */
+.hero-left .nav-internal {
+  position: static;
+  justify-content: center;
+  gap: clamp(8px, 1.5vw, 14px);
+  margin-bottom: 12px;
 }

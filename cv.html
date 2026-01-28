@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>cv — Jaime Ali Holguin Rios</title>
+		<link rel="stylesheet" href="src/css/homepage_style.css">
+		<style>
+			/* Page-specific: use the CV background */
+			body#cv {
+				background-image: url('src/images/cv/background.png');
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+			}
+			.cv-embed {
+				width: clamp(320px, 50vw, 900px);
+				height: clamp(480px, 80vh, 1000px);
+				border-radius: 8px;
+				box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+			}
+			.cv-left-spacer {
+				width: min(560px, 92vw);
+			}
+		</style>
+	</head>
+	<body id="cv">
+		<div id="nav">
+			<div id="nav_heading"></div>
+			<!-- Internal pill nav (top-left) -->
+			<div class="nav-internal" aria-label="internal links">
+				<a href="index.html" class="pill">home</a>
+				<a href="teaching.html" class="pill">teaching</a>
+				<a href="research.html" class="pill">research</a>
+				<a href="assorted_goods.html" class="pill">assorted goods</a>
+				<a href="cv.html" class="pill">cv</a>
+			</div>
+			<!-- External icons (top-right) -->
+			<div class="nav-external" aria-label="external links">
+				<a class="icon-link" href="https://github.com/Rios-Jaime" target="_blank" rel="noopener" title="GitHub">
+					<img src="src/images/general/github_logo.png" alt="GitHub" />
+				</a>
+				<a class="icon-link" href="https://scholar.google.com/citations?user=8m2q4zsAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
+					<img src="src/images/general/gs_logo.png" alt="Google Scholar" />
+				</a>
+				<a class="icon-link" href="mailto:jaime.rios@duke.edu" title="Email">
+					<img src="src/images/general/mail_logo.png" alt="Email" />
+				</a>
+			</div>
+		</div>
+
+		<main class="hero cv-hero" style="align-items: flex-start; padding-top: 20px;">
+			<section class="hero-left" style="display:none;"></section>
+			<section class="hero-right">
+				<div class="info-card" style="min-height: auto; width: clamp(280px, 34vw, 680px); padding: 16px 20px;">
+					<h1 class="name">Curriculum Vitae</h1>
+					<p class="subtitle">Latest version embedded below</p>
+				</div>
+				<object data="src/images/cv/JaimeRiosCV.pdf" type="application/pdf" class="cv-embed">
+					<p>Unable to display PDF. <a href="src/images/cv/JaimeRiosCV.pdf" target="_blank" rel="noopener">Open CV</a></p>
+				</object>
+			</section>
+		</main>
+		<style>
+			/* CV layout overrides */
+			.cv-hero { justify-content: flex-end; gap: 20px; padding-right: clamp(12px, 4vw, 80px); }
+			.cv-hero .hero-right { flex: 0 1 980px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+			.cv-hero .info-card .name { font-size: clamp(20px, 3.6vw, 34px); }
+			.cv-hero .info-card .subtitle { font-size: clamp(12px, 1.8vw, 16px); }
+		</style>
+	</body>
+</html>
