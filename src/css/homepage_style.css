@@ -1,7 +1,7 @@
 /* Layout variables */
 :root {
   --hero-image-height: clamp(380px, 60vh, 720px);
-  --hero-gap: 120px; /* a bit more to the right */
+  --hero-gap: clamp(24px, 6vw, 120px); /* responsive gap for gutters and column spacing */
 }
 
 #nav {
@@ -159,8 +159,8 @@ body {
 
 /* Keep nav aligned right as before */
 nav {
-  float: right;
-  margin-right: 50px;
+  float: left;
+  margin-left: 50px;
 }
 
 /* External icon nav (top-right) */
@@ -172,10 +172,32 @@ nav {
   align-items: center;
   gap: 12px;
 }
+.nav-internal {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-internal .pill {
+  padding: clamp(4px, 0.6vw, 8px) clamp(8px, 1vw, 12px);
+  border: 1px solid magenta;
+  border-radius: 999px;
+  color: magenta;
+  text-decoration: none;
+  font-size: clamp(11px, 1.6vw, 14px);
+  background-color: rgba(0,0,0,0.5);
+}
+
+.nav-internal .pill:hover {
+  background-color: rgba(255, 0, 255, 0.15);
+}
 
 .nav-external .icon-link img {
-  width: 22px;
-  height: 22px;
+  width: clamp(18px, 2.2vw, 22px);
+  height: clamp(18px, 2.2vw, 22px);
   display: block;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
 }
@@ -185,11 +207,28 @@ nav {
 }
 
 /* Responsive: stack on small screens */
+@media (max-width: 900px) {
+  .hero {
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: clamp(16px, 4vw, 24px);
+    padding: 24px clamp(16px, 4vw, 24px);
+  }
+  .cover-image {
+    max-width: 92vw;
+    height: clamp(280px, 50vh, 560px);
+  }
+  .info-card {
+    width: 92vw;
+    min-height: auto;
+    margin-left: 0;
+  }
+}
 @media (max-width: 600px) {
   .hero {
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 24px;
+    gap: clamp(14px, 5vw, 20px);
   }
   .cover-image {
     max-width: 92vw;
@@ -199,5 +238,15 @@ nav {
     width: 92vw;
     min-height: auto;
     margin-left: 0; /* no horizontal nudge on small screens */
+  }
+  .nav-external {
+    top: 6px;
+    right: 10px;
+    gap: 10px;
+  }
+  .nav-internal {
+    top: 6px;
+    left: 10px;
+    gap: 6px;
   }
 }
