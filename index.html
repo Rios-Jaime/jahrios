@@ -5,31 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>el jaime's personal website</title>
     <link rel="stylesheet" href="src/css/homepage_style.css">
-    <style>
-      /* Just override the background and push nav to the right */
-      body {
-        background-image: url('000058170025.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-      }
-      
-      nav {
-        float: right;
-        margin-right: 50px; /* Push the nav more to the right */
-      }
-    </style>
   </head>
   <body id="home">
     <div id="nav">
-
-      <div id="nav_heading">
-        <h1>Jaime Ali Holguin Rios</h1>
-        <img src = "src/images/homepage/cover.jpg" class="medium" alt="cover" />
-
+      <div id="nav_heading"></div>
+      <!-- External links: GitHub, Google Scholar, Mail -->
+      <div class="nav-external" aria-label="external links">
+        <a class="icon-link" href="https://github.com/Rios-Jaime" target="_blank" rel="noopener" title="GitHub">
+          <img src="src/images/general/github_logo.png" alt="GitHub" />
+        </a>
+        <a class="icon-link" href="https://scholar.google.com/citations?user=8m2q4zsAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
+          <img src="src/images/general/gs_logo.png" alt="Google Scholar" />
+        </a>
+        <a class="icon-link" href="mailto:jaime.rios@duke.edu" title="Email">
+          <img src="src/images/general/mail_logo.png" alt="Email" />
+        </a>
       </div>
-    
       <nav>
         <ul>
           <li><a href="gallery.html">gallery</a></li>
@@ -42,8 +33,20 @@
         </ul>
       </nav>
     </div>
-    
-    <center><img src="src/images/general/background.png" style="border:0"></center>
+
+    <main class="hero">
+      <section class="hero-left">
+        <div class="info-card">
+          <h1 class="name">Jaime Ali Holguin Rios</h1>
+          <p class="subtitle">Psychology and Neuroscience PhD</p>
+          <p class="subtitle">Duke University</p>
+          <p class="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta, turpis quis dapibus commodo, arcu odio volutpat sapien, non aliquet justo lorem vel justo. Vivamus eget augue vitae nibh pretium fermentum.</p>
+        </div>
+      </section>
+      <section class="hero-right">
+        <img src="src/images/homepage/cover.png" alt="Cover" class="cover-image" onerror="this.src='src/images/homepage/cover.jpg'" />
+      </section>
+    </main>
     
   </body>
 </html>
