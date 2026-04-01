@@ -4,79 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery</title>
-    <style>
-        body {
-            background-color: black;
-            color: cyan;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        a {
-            color: lime;
-            text-decoration: none;
-        }
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 800px;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 1000;
-        }
-
-        .lightbox img {
-            width: 100%;
-            height: auto;
-            max-height: 80vh;
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 30px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .gallery-container {
-            column-count: 3; /* Adjust for more or fewer columns */
-            column-gap: 10px;
-            margin: 20px auto;
-            width: 90%;
-        }
-
-        .gallery-container img {
-            width: 100%;
-            display: block;
-            margin-bottom: 10px;
-            transition: transform 0.3s;
-            border-radius: 5px;
-        }
-
-        .gallery-container img:nth-child(3n) { width: 80%; }
-        .gallery-container img:nth-child(4n) { width: 60%; }
-        .gallery-container img:nth-child(5n) { width: 100%; }
-
-        .gallery-container img:hover {
-            transform: scale(1.05);
-        }    
-    </style>
+    <link rel="stylesheet" href="src/css/homepage_style.css">
+    <link rel="stylesheet" href="src/css/gallery_page.css">
 </head>
 
-<body>
-    <h1>Gallery</h1>
-    <div id="gallery-list"></div>
-    <div id="image-container" class="gallery-container"></div>
+<body id="home">
+    <div id="nav">
+        <div class="nav-internal" aria-label="internal links">
+            <a href="index.html" class="pill">home</a>
+            <a href="teaching.html" class="pill">teaching</a>
+            <a href="research.html" class="pill">research</a>
+            <a href="assorted_goods.html" class="pill">assorted goods</a>
+            <a href="cv.html" class="pill">cv</a>
+        </div>
+    </div>
+
+    <main class="gallery-page">
+        <section class="info-card gallery-card">
+            <h1 class="name">Gallery</h1>
+            <p class="bio" id="gallery-subtitle"></p>
+            <div id="gallery-list"></div>
+        </section>
+
+        <div id="image-container"></div>
+    </main>
 
     <script>
-        let galleryStructure = {}; // This will be loaded from the JSON file
+        const GALLERY_DIR = "gallery";
+        let galleryStructure = null; // This will be loaded from the JSON file
+        const PAGE_HREF = window.location.pathname.split("/").pop() || "gallery.html";
 
         // Fetch the dynamically generated JSON file
         fetch("galleryStructure.json")
@@ -98,73 +54,83 @@
             }
         }
 
+        function encodePath(path) {
+            return path
+                .split("/")
+                .filter(Boolean)
+                .map((part) => encodeURIComponent(part))
+                .join("/");
+        }
+
         function showMainFolders() {
-            let html = `<a href="index.html">← Home</a><h2>Select a Category</h2><ul>`;
-            Object.keys(galleryStructure).forEach(folder => {
-                html += `<li><a href="?path=${folder}">${folder}</a></li>`;
-            });
-            html += "</ul>";
-            document.getElementById("gallery-list").innerHTML = html;
+            document.getElementById("gallery-subtitle").textContent = "Select a category";
+            document.getElementById("image-container").innerHTML = "";
+
+            const folders = Object.keys(galleryStructure || {});
+            const pills = folders
+                .map((folder) => `<a class="gallery-pill" href="${PAGE_HREF}?path=${encodeURIComponent(folder)}">${folder}</a>`)
+                .join("");
+
+            document.getElementById("gallery-list").innerHTML =
+                `<div class="gallery-heading">Categories</div><div class="gallery-links">${pills}</div>`;
         }
 
         function showSubfolderOrImages(path) {
-            sessionStorage.setItem("previousPath", path);
-
-            const parts = path.split("/");
+            const parts = path.split("/").filter(Boolean);
             let currentLevel = galleryStructure;
 
             for (let part of parts) {
-                if (currentLevel[part]) {
+                if (currentLevel && currentLevel[part]) {
                     currentLevel = currentLevel[part];
                 } else {
+                    document.getElementById("gallery-subtitle").textContent = "Unknown category";
+                    document.getElementById("gallery-list").innerHTML =
+                        `<div class="gallery-links"><a class="gallery-pill" href="${PAGE_HREF}">Back to categories</a></div>`;
+                    document.getElementById("image-container").innerHTML = "";
                     return;
                 }
             }
 
-            // ✅ Add back button to subcategory pages
-            let parentPath = parts.slice(0, -1).join("/");
-            let backButton = parentPath
-                ? `<a href="javascript:showSubfolderOrImages('${parentPath}');">← Back</a>`
-                : `<a href="gallery.html">← Back to Categories</a>`;
+            const breadcrumb = parts.join(" > ");
+            document.getElementById("gallery-subtitle").textContent = breadcrumb;
 
-            let html = `${backButton}<h2>${path.replace(/\//g, " > ")}</h2><ul>`;
+            const parentPath = parts.slice(0, -1).join("/");
+            const backHref = parentPath ? `${PAGE_HREF}?path=${encodeURIComponent(parentPath)}` : PAGE_HREF;
 
             if ("images" in currentLevel) {
-                displayImages(`gallery/${path}`, currentLevel["images"]);
-            } else {
-                Object.keys(currentLevel).forEach(subfolder => {
-                    if (subfolder !== "images") {
-                        html += `<li><a href="?path=${path}/${subfolder}">${subfolder}</a></li>`;
-                    }
-                });
+                document.getElementById("gallery-list").innerHTML =
+                    `<div class="gallery-links"><a class="gallery-pill" href="${backHref}">← Back</a></div>`;
+                displayImages(path, currentLevel["images"]);
+                return;
             }
 
-            document.getElementById("gallery-list").innerHTML = html + "</ul>";
-        }
+            const subfolders = Object.keys(currentLevel).filter((k) => k !== "images");
+            const pills = subfolders
+                .map((subfolder) => {
+                    const newPath = `${path}/${subfolder}`;
+                    return `<a class="gallery-pill" href="${PAGE_HREF}?path=${encodeURIComponent(newPath)}">${subfolder}</a>`;
+                })
+                .join("");
 
-        function goBack() {
-            let prevPath = sessionStorage.getItem("previousPath");
-
-            if (prevPath) {
-                showSubfolderOrImages(prevPath);
-            } else {
-                window.location.href = "gallery.html"; // ✅ Default to main gallery if no history
-            }
+            document.getElementById("gallery-list").innerHTML =
+                `<div class="gallery-links"><a class="gallery-pill" href="${backHref}">← Back</a></div>` +
+                `<div class="gallery-heading">${breadcrumb}</div>` +
+                `<div class="gallery-links">${pills}</div>`;
+            document.getElementById("image-container").innerHTML = "";
         }
 
         function displayImages(path, images) {
-            let html = `<a href="javascript:goBack();">← Back</a>`;
-            html += '<div class="gallery-container">';
+            const safeFolder = encodePath(path);
+            const html =
+                '<div class="gallery-container">' +
+                images
+                    .map((img) => {
+                        const fullPath = `${GALLERY_DIR}/${safeFolder}/${encodeURIComponent(img)}`;
+                        return `<img src="${fullPath}" alt="" loading="lazy" onerror="this.onerror=null; this.style.display='none'; console.error('Image not found:', '${fullPath}');" onclick="openLightbox('${fullPath}')">`;
+                    })
+                    .join("") +
+                "</div>";
 
-            images.forEach(img => {
-                let fullPath = `gallery/${path}/${img}`;
-                console.log("Loading Image:", fullPath);
-        
-                // ✅ If an image fails to load, it will be hidden instead of displaying a broken image
-                html += `<img src="${fullPath}" class="gallery-img" onerror="this.onerror=null; this.style.display='none'; console.error('Image not found:', '${fullPath}');" onclick="openLightbox('${fullPath}')">`;
-            });
-
-            html += '</div>';
             document.getElementById("image-container").innerHTML = html;
         }
 
@@ -182,7 +148,7 @@
 
     <div id="lightbox" class="lightbox">
         <span class="close" onclick="closeLightbox()">✖</span>
-        <img id="lightbox-img">
+        <img id="lightbox-img" alt="">
     </div>
 
 </body>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assorted Goods</title>
   <link rel="stylesheet" href="src/css/homepage_style.css">
+  <link rel="stylesheet" href="src/css/gallery_page.css">
 </head>
 <body id="home">
   <div id="nav">
@@ -16,13 +17,163 @@
       <a href="cv.html" class="pill">cv</a>
     </div>
   </div>
-  <main class="hero" style="min-height: 60vh;">
-    <section class="hero-left">
-      <div class="info-card" style="min-height: auto;">
-        <h1 class="name">Assorted Goods</h1>
-        <p class="bio">Barebones page. Add your content here.</p>
-      </div>
+  <main class="gallery-page">
+    <section class="info-card gallery-card">
+      <h1 class="name">Assorted Goods</h1>
+      <p class="bio" id="gallery-subtitle"></p>
+      <div id="gallery-list"></div>
     </section>
+
+    <div id="image-container"></div>
   </main>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="close" type="button" aria-label="Close" onclick="closeLightbox()">✖</button>
+    <img id="lightbox-img" alt="" />
+  </div>
+
+  <script>
+    const GALLERY_DIR = "gallery";
+    let galleryStructure = null;
+    const PAGE_HREF = window.location.pathname.split("/").pop() || "assorted_goods.html";
+
+    fetch("galleryStructure.json")
+      .then((response) => response.json())
+      .then((data) => {
+        galleryStructure = data;
+        loadGallery();
+      })
+      .catch((error) => {
+        console.error("Error loading gallery structure:", error);
+        document.getElementById("gallery-subtitle").textContent =
+          "Could not load galleryStructure.json";
+      });
+
+    function encodePath(path) {
+      return path
+        .split("/")
+        .filter(Boolean)
+        .map((part) => encodeURIComponent(part))
+        .join("/");
+    }
+
+    function getPathFromQuery() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("path") || "";
+    }
+
+    function loadGallery() {
+      const path = getPathFromQuery();
+
+      if (!path) {
+        showMainFolders();
+      } else {
+        showSubfolderOrImages(path);
+      }
+    }
+
+    function showMainFolders() {
+      document.getElementById("gallery-subtitle").textContent = "Select a category";
+      document.getElementById("image-container").innerHTML = "";
+
+      const folders = Object.keys(galleryStructure || {});
+      const pills = folders
+        .map(
+          (folder) =>
+            `<a class="gallery-pill" href="${PAGE_HREF}?path=${encodeURIComponent(folder)}">${folder}</a>`
+        )
+        .join("");
+
+      document.getElementById("gallery-list").innerHTML =
+        `<div class="gallery-heading">Categories</div><div class="gallery-links">${pills}</div>`;
+    }
+
+    function resolvePath(path) {
+      const parts = path.split("/").filter(Boolean);
+      let currentLevel = galleryStructure;
+
+      for (const part of parts) {
+        if (!currentLevel || !(part in currentLevel)) return null;
+        currentLevel = currentLevel[part];
+      }
+      return currentLevel;
+    }
+
+    function showSubfolderOrImages(path) {
+      const parts = path.split("/").filter(Boolean);
+      const currentLevel = resolvePath(path);
+
+      if (!currentLevel) {
+        document.getElementById("gallery-subtitle").textContent = "Unknown category";
+        document.getElementById("gallery-list").innerHTML =
+          `<div class="gallery-links"><a class="gallery-pill" href="${PAGE_HREF}">Back to categories</a></div>`;
+        document.getElementById("image-container").innerHTML = "";
+        return;
+      }
+
+      const breadcrumb = parts.join(" > ");
+      document.getElementById("gallery-subtitle").textContent = breadcrumb;
+
+      const parentPath = parts.slice(0, -1).join("/");
+      const backHref = parentPath
+        ? `${PAGE_HREF}?path=${encodeURIComponent(parentPath)}`
+        : PAGE_HREF;
+
+      if ("images" in currentLevel) {
+        document.getElementById("gallery-list").innerHTML =
+          `<div class="gallery-links"><a class="gallery-pill" href="${backHref}">← Back</a></div>`;
+        displayImages(path, currentLevel.images);
+        return;
+      }
+
+      const subfolders = Object.keys(currentLevel).filter((k) => k !== "images");
+      const pills = subfolders
+        .map((subfolder) => {
+          const newPath = `${path}/${subfolder}`;
+          return `<a class="gallery-pill" href="${PAGE_HREF}?path=${encodeURIComponent(newPath)}">${subfolder}</a>`;
+        })
+        .join("");
+
+      document.getElementById("gallery-list").innerHTML =
+        `<div class="gallery-links"><a class="gallery-pill" href="${backHref}">← Back</a></div>` +
+        `<div class="gallery-heading">${breadcrumb}</div>` +
+        `<div class="gallery-links">${pills}</div>`;
+
+      document.getElementById("image-container").innerHTML = "";
+    }
+
+    function displayImages(path, images) {
+      const safeFolder = encodePath(path);
+      const html =
+        '<div class="gallery-container">' +
+        images
+          .map((img) => {
+            const fullPath = `${GALLERY_DIR}/${safeFolder}/${encodeURIComponent(img)}`;
+            return `<img src="${fullPath}" alt="" loading="lazy" onerror="this.onerror=null; this.style.display='none'; console.error('Image not found:', '${fullPath}');" onclick="openLightbox('${fullPath}')">`;
+          })
+          .join("") +
+        "</div>";
+
+      document.getElementById("image-container").innerHTML = html;
+    }
+
+    function openLightbox(imgSrc) {
+      const lightbox = document.getElementById("lightbox");
+      document.getElementById("lightbox-img").src = imgSrc;
+      lightbox.style.display = "block";
+      lightbox.setAttribute("aria-hidden", "false");
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById("lightbox");
+      lightbox.style.display = "none";
+      lightbox.setAttribute("aria-hidden", "true");
+      document.getElementById("lightbox-img").src = "";
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+  </script>
 </body>
 </html>
