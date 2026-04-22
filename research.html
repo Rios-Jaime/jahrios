@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research</title>
   <link rel="stylesheet" href="src/css/homepage_style.css">
+  <style>
+    /* Research layout: center the text card and keep it readable on wide screens. */
+    .research-hero {
+      justify-content: flex-end;
+      gap: 24px;
+      padding-right: clamp(60px, 8vw, 160px);
+    }
+
+    .research-hero .hero-right {
+      flex: 0 1 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .research-hero a,
+    .research-hero a:visited {
+      color: #d3d3d3;
+    }
+  </style>
 </head>
 <body id="home">
   <div id="nav">
@@ -12,15 +32,64 @@
       <a href="index.html" class="pill">home</a>
       <a href="teaching.html" class="pill">teaching</a>
       <a href="research.html" class="pill">research</a>
-      <a href="assorted_goods.html" class="pill">assorted goods</a>
       <a href="cv.html" class="pill">cv</a>
     </div>
+    <div class="nav-external" aria-label="external links">
+      <a class="icon-link" href="https://github.com/Rios-Jaime" target="_blank" rel="noopener" title="GitHub">
+        <img src="src/images/general/github_logo.png" alt="GitHub" />
+      </a>
+      <a class="icon-link" href="https://scholar.google.com/citations?user=8m2q4zsAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
+        <img src="src/images/general/gs_logo.png" alt="Google Scholar" />
+      </a>
+      <a class="icon-link" href="mailto:jaime.rios@duke.edu" title="Email">
+        <img src="src/images/general/mail_logo.png" alt="Email" />
+      </a>
+    </div>
   </div>
-  <main class="hero" style="min-height: 60vh;">
-    <section class="hero-left">
-      <div class="info-card" style="min-height: auto;">
+  <main class="hero research-hero" style="min-height: 60vh;">
+    <section class="hero-left" style="display:none;"></section>
+    <section class="hero-right">
+      <div class="info-card" style="min-height: auto; width: clamp(280px, 40vw, 760px);">
         <h1 class="name">Research</h1>
-        <p class="bio">Barebones page. Add your content here.</p>
+
+        <p class="bio">
+          Attention can be subdivided into two sub-constructs known as internal and external attention.
+          Internal attention refers to attention placed on memory representations, while external attention
+          refers to sensory-based processes. Individuals consistently switch between these two attentional
+          domains in order to accomplish goals throughout daily life. My research focuses on understanding
+          attention mode switching in the following ways:
+        </p>
+
+        <h3 class="subtitle">Neural/Behavioral Correlates of Attention Switching</h3>
+        <p class="bio">
+          My primary interest is in understanding the control mechanisms involved in attention switching
+          using behavioral and neuroimaging methodologies.
+        </p>
+
+        <h3 class="subtitle">Sensorimnemonic Decition Point</h3>
+        <p class="bio">
+          My secondary research line involves understanding how we choose whether to engage internal or
+          external attention when we are met with a decision. How do individuals choose which attention mode
+          to engage when presented with a choice.
+        </p>
+
+        <h3 class="subtitle">The Relationship Between Internal and External Attention</h3>
+        <p class="bio">
+          My final line of research looks to understand the relationship between internal and external
+          attention. Specifically, whether or not we are able to engage in both attention domains
+          concurrently or are forced to engage in them in serial.
+        </p>
+
+        <h3 class="subtitle">Conference Posters</h3>
+        <p class="bio">
+          <a href="src/images/conference posters/attention_mode_switching_poster_psychonomics.pdf" target="_blank" rel="noopener">
+            Psychonomic Society 2025
+          </a>
+          <br>
+          <a href="src/images/conference posters/attention_mode_switching_poster_cns_2026.pdf" target="_blank" rel="noopener">
+            CNS, NCCC 2026
+          </a>
+        </p>
       </div>
     </section>
   </main>
