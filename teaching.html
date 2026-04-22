@@ -14,6 +14,80 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
+
+    .teaching-hero {
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: clamp(20px, 4vw, 48px);
+      padding-left: clamp(24px, 5vw, 80px);
+      padding-right: clamp(24px, 5vw, 80px);
+    }
+
+    .teaching-hero .hero-left {
+      flex: 0 1 360px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .teaching-hero .hero-right {
+      flex: 1 1 760px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .quote-column {
+      width: min(360px, 92vw);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .quote-card {
+      background-color: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 0, 255, 0.75);
+      border-radius: 12px;
+      padding: 18px 20px;
+      text-align: left;
+      backdrop-filter: blur(2px);
+      color: #ffb3ef;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .quote-card h3 {
+      margin: 0 0 10px 0;
+      font-size: clamp(15px, 2vw, 18px);
+      color: magenta;
+    }
+
+    .quote-card p {
+      margin: 0;
+      font-size: clamp(13px, 1.8vw, 15px);
+      line-height: 1.55;
+    }
+
+    .quote-card p + p {
+      margin-top: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .teaching-hero {
+        align-items: center;
+        padding-left: clamp(16px, 4vw, 24px);
+        padding-right: clamp(16px, 4vw, 24px);
+      }
+
+      .teaching-hero .hero-left,
+      .teaching-hero .hero-right {
+        flex: 1 1 auto;
+        width: 100%;
+      }
+
+      .quote-column {
+        margin-top: 0;
+      }
+    }
   </style>
 </head>
 <body id="teaching">
@@ -38,7 +112,17 @@
     </div>
   </div>
   <main class="hero teaching-hero" style="min-height: 60vh;">
-    <section class="hero-left" style="display:none;"></section>
+    <section class="hero-left">
+      <div class="quote-column" aria-label="student evaluation quotes">
+        <div class="quote-card">
+          <h3>Student Evaluations</h3>
+          <p>"He was super helpful in answering questions and always provided us with support."</p>
+          <p>"Jaime was very approachable and helpful."</p>
+          <p>"I think that Jaime was very helpful and kind and explained confusing concepts very well."</p>
+          <p>"Jaime was very nice and helpful. He was a great TA. He made it easier to stay engaged during our early morning discussion section."</p>
+        </div>
+      </div>
+    </section>
     <section class="hero-right">
       <div class="info-card" style="min-height: auto; width: clamp(280px, 40vw, 760px);">
         <h1 class="name">Teaching</h1>
@@ -89,10 +173,5 @@
       </div>
     </section>
   </main>
-  <style>
-    /* Teaching layout: center the text box within the right column */
-    .teaching-hero { justify-content: flex-end; gap: 24px; padding-right: clamp(60px, 8vw, 160px); }
-    .teaching-hero .hero-right { flex: 0 1 900px; display: flex; flex-direction: column; align-items: center; }
-  </style>
 </body>
 </html>
